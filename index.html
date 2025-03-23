@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
-    <title>Athena.IA - Protótipo feito por MARINA MALUTA</title>
+    <title>Atina.IA - Protótipo feito por MARINA MALUTA</title>
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
@@ -386,14 +386,14 @@
 <body>
 
 <header>
-    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Logo Athena.IA">
-    <h1>Athena.IA</h1>
+    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Logo Atina.IA">
+    <h1>Atina.IA</h1>
 </header>
 
 <div class="intro-section">
     <section class="intro">
-        <h2>Bem-vindo à Athena.IA</h2>
-        <p>A Athena.IA é uma ferramenta baseada em IA para auxiliar professores da educação básica na criação de atividades gamificadas. Ela combina conhecimentos gerais (via ChatGPT), o framework 4D e a especialidade em gamificação de Isotani, oferecendo sugestões personalizadas, adaptáveis e inovadoras para suas aulas. 🎉</p>
+        <h2>Bem-vindo à Atina.IA</h2>
+        <p>A Atina.IA é uma ferramenta baseada em IA para auxiliar professores da educação básica na criação de atividades gamificadas. Ela combina conhecimentos gerais (via ChatGPT), o framework 4D e a especialidade em gamificação de Isotani, oferecendo sugestões personalizadas, adaptáveis e inovadoras para suas aulas. 🎉</p>
     </section>
 </div>
 
@@ -437,7 +437,7 @@
 
         <section class="references-section">
             <h3>Referências</h3>
-            <p>Abaixo seguem algumas referências utilizadas no desenvolvimento da Athena.IA:</p>
+            <p>Abaixo seguem algumas referências utilizadas no desenvolvimento da Atina.IA:</p>
             <ul class="resources-list">
                 <li><a href="#" target="_blank">Borges, S. de S., Durelli, V. H. S., Reis, H. M. and Isotani, S. (2014). <b>A systematic mapping on gamification applied to education</b>. In Proceedings of the 29th Annual ACM Symposium on Applied Computing - SAC '14.</a></li>
                 <li><a href="#" target="_blank">OLIVEIRA, Wilk; HAMARI, Juho; JOAQUIM, Sivaldo; TODA, Armando M.; PALOMINO, Paula T.; VASSILEVA, Julita; ISOTANI, Seiji. <b>The effects of personalized gamification on students' flow experience, motivation, and enjoyment</b>. Smart Learning Environments, v. 9, n. 1, p. 26-pg., 2022.</a></li>
@@ -453,7 +453,7 @@
     <!-- Right Column: Suggestions in chat format -->
     <div class="right-col">
         <section class="suggestions-section">
-            <h3>Sugestões Geradas pela Athena.IA</h3>
+            <h3>Sugestões Geradas pela Atina.IA</h3>
             <p id="loadingMessage">Gerando sugestões, aguarde...</p>
             <div class="chat" id="suggestionsContainer" style="display: none;">
 
@@ -486,9 +486,9 @@
 
                 <!-- Quarto balão combinando as sugestões -->
                 <div class="chat-bubble combined-bubble" id="bubbleCombined" style="display:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Athena.IA">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Atina.IA">
                     <div class="bubble">
-                        <div class="agent-name">Athena.IA</div>
+                        <div class="agent-name">Atina.IA</div>
                         <p id="agentCombined"></p>
                     </div>
                 </div>
@@ -505,7 +505,7 @@
 </main>
 
 <footer>
-    &copy; 2024 Athena.IA - Prot&oacute;tipo
+    &copy; 2024 Atina.IA - Prot&oacute;tipo
 </footer>
 
 <script>
@@ -559,7 +559,7 @@
             // Mostrar o quarto bal&atilde;o com a combina&ccedil;&atilde;o das sugest&otilde;es
             setTimeout(() => {
                 bubbleCombined.style.display = 'flex';
-                agentCombined.textContent = " Ao integrar as ideias dos tr&ecirc;s agentes, voc&ecirc; pode criar uma atividade gamificada completa: use um quiz de formas geom&eacute;tricas (ChatGPT) para avaliar conhecimento, incentive a reflex&atilde;o p&oacute;s-atividade (Agente 4D) e aplique mec&acirc;nicas de jogo (Agente Iso) para manter o engajamento. Al&eacute;m disso, a Athena.IA fornece recursos adicionais, como exemplos de atividades, templates e links para plataformas de gamifica&ccedil;&atilde;o, ajudando a adaptar as sugest&otilde;es ao seu contexto. ";
+                agentCombined.textContent = " Ao integrar as ideias dos tr&ecirc;s agentes, voc&ecirc; pode criar uma atividade gamificada completa: use um quiz de formas geom&eacute;tricas (ChatGPT) para avaliar conhecimento, incentive a reflex&atilde;o p&oacute;s-atividade (Agente 4D) e aplique mec&acirc;nicas de jogo (Agente Iso) para manter o engajamento. Al&eacute;m disso, a Atina.IA fornece recursos adicionais, como exemplos de atividades, templates e links para plataformas de gamifica&ccedil;&atilde;o, ajudando a adaptar as sugest&otilde;es ao seu contexto. ";
 
                 // Agora mostra o campo de chat
                 chatInputContainer.style.display = 'flex';
@@ -588,7 +588,7 @@
             userMessageInput.value = '';
             suggestionsContainer.scrollTop = suggestionsContainer.scrollHeight;
 
-            // Ao enviar a mensagem do usu&aacute;rio, gerar mais 3 respostas dos agentes e depois a Athena.IA
+            // Ao enviar a mensagem do usu&aacute;rio, gerar mais 3 respostas dos agentes e depois a Atina.IA
             setTimeout(() => {
                 const generalReply = document.createElement('div');
                 generalReply.classList.add('chat-bubble', 'general-bubble');
@@ -626,15 +626,15 @@
 
                 suggestionsContainer.scrollTop = suggestionsContainer.scrollHeight;
 
-                // Ap&oacute;s as tr&ecirc;s novas sugest&otilde;es, a Athena.IA d&aacute; outra resposta combinando
+                // Ap&oacute;s as tr&ecirc;s novas sugest&otilde;es, a Atina.IA d&aacute; outra resposta combinando
                 setTimeout(() => {
                     const athenaReply = document.createElement('div');
                     athenaReply.classList.add('chat-bubble', 'combined-bubble');
                     athenaReply.innerHTML = `
-                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Athena.IA">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Atina.IA">
                         <div class="bubble">
-                            <div class="agent-name">Athena.IA</div>
-                            <p> Ao reunir essas novas ideias, voc&ecirc; pode refor&ccedil;ar o aprendizado p&oacute;s-quiz com flashcards (ChatGPT), promover a reflex&atilde;o oral (Agente 4D) e celebrar conquistas (Agente Iso). Lembre-se que a Athena.IA disponibiliza recursos adicionais, como exemplos pr&aacute;ticos e plataformas recomendadas, ajudando a tornar a experi&ecirc;ncia ainda mais rica e adaptada &agrave; sua turma. </p>
+                            <div class="agent-name">Atina.IA</div>
+                            <p> Ao reunir essas novas ideias, voc&ecirc; pode refor&ccedil;ar o aprendizado p&oacute;s-quiz com flashcards (ChatGPT), promover a reflex&atilde;o oral (Agente 4D) e celebrar conquistas (Agente Iso). Lembre-se que a Atina.IA disponibiliza recursos adicionais, como exemplos pr&aacute;ticos e plataformas recomendadas, ajudando a tornar a experi&ecirc;ncia ainda mais rica e adaptada &agrave; sua turma. </p>
                         </div>
                     `;
 
