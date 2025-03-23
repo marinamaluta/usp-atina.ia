@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
+    <title>Athena.IA - Protótipo feito por MARINA MALUTA</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Montserrat", sans-serif;
+            background: linear-gradient(135deg, #F0F4F8, #E8F1FD);
+            color: #333;
+        }
+
+        header {
+            background: #4C51BF;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        header img {
+            height: 50px;
+            margin-right: 20px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        header h1 {
+            font-weight: 600;
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .intro-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .intro {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .intro h2 {
+            margin-top: 0;
+            font-weight: 600;
+            font-size: 1.5rem;
+            display: inline-block;
+            background: #A78BFA;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .intro p {
+            line-height: 1.6;
+            margin-top: 20px;
+            font-size: 1.05rem;
+        }
+
+        main {
+            display: flex;
+            flex-direction: row;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            gap: 20px;
+        }
+
+        .left-col,
+        .right-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        section {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .prompt-section h3,
+        .resources-section h3,
+        .suggestions-section h3,
+        .references-section h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .prompt-section h3::before {
+            content: "📝 ";
+        }
+
+        .suggestions-section h3::before {
+            content: "🏆 ";
+        }
+
+        .resources-section h3::before {
+            content: "🎮 ";
+        }
+
+        .references-section h3::before {
+            content: "📚 ";
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4C51BF;
+        }
+
+        form input[type="text"], form textarea {
+            padding: 12px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        form input[type="text"]:focus, form textarea:focus {
+            border-color: #A78BFA;
+            outline: none;
+        }
+
+        form button {
+            background: #4C51BF;
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        form button:hover {
+            background: #4338CA;
+        }
+
+        .resources-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .resources-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .resources-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .resources-list li a {
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .resources-list li a:hover {
+            text-decoration: underline;
+        }
+
+        .resources-list li::before {
+            content: "🎁";
+        }
+
+        footer {
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        #loadingMessage {
+            display: none; 
+            font-style: italic;
+            color: #4C51BF;
+        }
+
+        /* Chat styles */
+        .chat {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chat-bubble {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            max-width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+
+        .chat-bubble img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+
+        .bubble {
+            background: #E5E7EB;
+            padding: 15px;
+            border-radius: 12px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .bubble::after {
+            content: "";
+            position: absolute;
+            border-style: solid;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #E5E7EB transparent transparent;
+            left: -10px;
+            top: 20px;
+        }
+
+        .general-bubble .bubble {
+            background: #D1FAE5;
+        }
+
+        .general-bubble .bubble::after {
+            border-color: transparent #D1FAE5 transparent transparent;
+        }
+
+        .fadel-bubble .bubble {
+            background: #FCE7F3;
+        }
+
+        .fadel-bubble .bubble::after {
+            border-color: transparent #FCE7F3 transparent transparent;
+        }
+
+        .iso-bubble .bubble {
+            background: #E0F2FE;
+        }
+
+        .iso-bubble .bubble::after {
+            border-color: transparent #E0F2FE transparent transparent;
+        }
+
+        .combined-bubble .bubble {
+            background: #FEF9C3;
+        }
+
+        .combined-bubble .bubble::after {
+            border-color: transparent #FEF9C3 transparent transparent;
+        }
+
+        .agent-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #4C51BF;
+        }
+
+        /* User bubble styles */
+        .user-bubble {
+            align-self: flex-end;
+            gap: 10px;
+            flex-direction: row-reverse;
+        }
+
+        .user-bubble .bubble {
+            background: #FBB6CE;
+        }
+
+        .user-bubble .bubble::after {
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent #FBB6CE;
+            left: auto;
+            right: -10px;
+            top: 20px;
+            transform: rotate(180deg);
+        }
+
+        .user-bubble img {
+            transform: scaleX(-1);
+        }
+
+        .chat-input {
+            display: none;
+            gap: 10px;
+            margin-top:20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .chat-input.visible {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .chat-input input[type="text"]:focus {
+            border-color: #A78BFA;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: #4C51BF;
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: #4338CA;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Logo Athena.IA">
+    <h1>Athena.IA</h1>
+</header>
+
+<div class="intro-section">
+    <section class="intro">
+        <h2>Bem-vindo à Athena.IA</h2>
+        <p>A Athena.IA é uma ferramenta baseada em IA para auxiliar professores da educação básica na criação de atividades gamificadas. Ela combina conhecimentos gerais (via ChatGPT), o framework 4D e a especialidade em gamificação de Isotani, oferecendo sugestões personalizadas, adaptáveis e inovadoras para suas aulas. 🎉</p>
+    </section>
+</div>
+
+<main>
+    <!-- Left Column: Prompt, Resources, References -->
+    <div class="left-col">
+
+        <section class="prompt-section">
+            <h3>Descreva a atividade a ser gamificada</h3>
+            <form id="promptForm">
+                <label for="learningObjective">Objetivo de Aprendizagem:</label>
+                <input type="text" id="learningObjective" name="learningObjective" placeholder="Ex: Introduzir conceitos básicos de geometria">
+                
+                <label for="context">Contexto da Turma (idade, nível, dificuldades):</label>
+                <input type="text" id="context" name="context" placeholder="Ex: Alunos do 6º ano, 11-12 anos, dificuldade em visualizar formas 3D">
+
+                <label for="resources">Recursos Disponíveis (materiais, tempo, tecnologia):</label>
+                <input type="text" id="resources" name="resources" placeholder="Ex: 1 aula de 50 minutos, lousa, lápis e papel, projetor">
+
+                <label for="topic">Tópico/Disciplina:</label>
+                <input type="text" id="topic" name="topic" placeholder="Ex: Matemática, Geometria básica">
+
+                <label for="specialNeeds">Preferências/Dificuldades dos Alunos (estilo de aprendizagem):</label>
+                <input type="text" id="specialNeeds" name="specialNeeds" placeholder="Ex: Alunos visuais com dificuldade em abstrações puras">
+
+                <label for="prompt">Descrição da atividade desejada:</label>
+                <textarea id="prompt" name="prompt" placeholder="Descreva a atividade desejada, incluindo o tipo de exercício, o formato da avaliação, etc."></textarea>
+
+                <button type="button" id="generateBtn">Gerar Sugestões 🚀</button>
+            </form>
+        </section>
+
+        <section class="resources-section">
+            <h3>Recursos Adicionais</h3>
+            <ul class="resources-list">
+                <li><a href="#" target="_blank">Exemplos de Atividades Gamificadas</a></li>
+                <li><a href="#" target="_blank">Templates para Criação de Aulas</a></li>
+                <li><a href="#" target="_blank">Plataformas de Gamificação para Educação</a></li>
+            </ul>
+        </section>
+
+        <section class="references-section">
+            <h3>Referências</h3>
+            <p>Abaixo seguem algumas referências utilizadas no desenvolvimento da Athena.IA:</p>
+            <ul class="resources-list">
+                <li><a href="#" target="_blank">Borges, S. de S., Durelli, V. H. S., Reis, H. M. and Isotani, S. (2014). <b>A systematic mapping on gamification applied to education</b>. In Proceedings of the 29th Annual ACM Symposium on Applied Computing - SAC '14.</a></li>
+                <li><a href="#" target="_blank">OLIVEIRA, Wilk; HAMARI, Juho; JOAQUIM, Sivaldo; TODA, Armando M.; PALOMINO, Paula T.; VASSILEVA, Julita; ISOTANI, Seiji. <b>The effects of personalized gamification on students' flow experience, motivation, and enjoyment</b>. Smart Learning Environments, v. 9, n. 1, p. 26-pg., 2022.</a></li>
+                <li><a href="#" target="_blank">Toda, A. M., da Silva, A. P. and Isotani, S. (2017). <b>Desafios para o Planejamento e Implantação da Gamificação no Contexto Educacional</b>. RENOTE, v. 15, n. 2.</a></li>
+                <li><a href="#" target="_blank">Toda, A. M., Do Carmo, R. M. C., Da Silva, A. P., Bittencourt, I. I. and Isotani, S. (2018). <b>An approach for planning and deploying gamification concepts with social networks within educational contexts</b>. International Journal of Information Management.</a></li>
+                <li><a href="#" target="_blank">Holmes, W; Bialik, M; Fadel, C; (2019) <b>Artificial Intelligence in Education Promises and Implications for Teaching and Learning</b>. (1st ed.). Center for Curriculum Redesign: MA, USA.</a></li>
+                <li><a href="#" target="_blank">Character education for the 21st century: What should students learn. M Bialik, M Bogan, C Fadel, M Horvathova - Center for Curriculum Redesign, 2015.</a></li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- Right Column: Suggestions in chat format -->
+    <div class="right-col">
+        <section class="suggestions-section">
+            <h3>Sugestões Geradas pela Athena.IA</h3>
+            <p id="loadingMessage">Gerando sugestões, aguarde...</p>
+            <div class="chat" id="suggestionsContainer" style="display: none;">
+
+                <!-- ChatGPT (Generalista) -->
+                <div class="chat-bubble general-bubble" id="bubbleGeneral" style="display:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="ChatGPT">
+                    <div class="bubble">
+                        <div class="agent-name">ChatGPT (Generalista)</div>
+                        <p id="agentGeneral"></p>
+                    </div>
+                </div>
+
+                <!-- Agente 4D -->
+                <div class="chat-bubble fadel-bubble" id="bubbleFadel" style="display:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712016.png" alt="Agente 4D">
+                    <div class="bubble">
+                        <div class="agent-name">Agente 4D</div>
+                        <p id="agent4D"></p>
+                    </div>
+                </div>
+
+                <!-- Agente Iso -->
+                <div class="chat-bubble iso-bubble" id="bubbleIso" style="display:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712019.png" alt="Agente Iso">
+                    <div class="bubble">
+                        <div class="agent-name">Agente Iso</div>
+                        <p id="agentIso"></p>
+                    </div>
+                </div>
+
+                <!-- Quarto balão combinando as sugestões -->
+                <div class="chat-bubble combined-bubble" id="bubbleCombined" style="display:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Athena.IA">
+                    <div class="bubble">
+                        <div class="agent-name">Athena.IA</div>
+                        <p id="agentCombined"></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Chat input area inicialmente escondido -->
+            <div class="chat-input" id="chatInputContainer">
+                <input type="text" id="userMessage" placeholder='Digite sua mensagem...' />
+                <button id="sendBtn">Enviar</button>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    &copy; 2024 Athena.IA - Prot&oacute;tipo
+</footer>
+
+<script>
+    const generateBtn = document.getElementById('generateBtn');
+    const loadingMessage = document.getElementById('loadingMessage');
+    const suggestionsContainer = document.getElementById('suggestionsContainer');
+
+    const agentGeneral = document.getElementById('agentGeneral');
+    const agent4D = document.getElementById('agent4D');
+    const agentIso = document.getElementById('agentIso');
+    const agentCombined = document.getElementById('agentCombined');
+
+    const bubbleGeneral = document.getElementById('bubbleGeneral');
+    const bubbleFadel = document.getElementById('bubbleFadel');
+    const bubbleIso = document.getElementById('bubbleIso');
+    const bubbleCombined = document.getElementById('bubbleCombined');
+    const chatInputContainer = document.getElementById('chatInputContainer');
+
+    const userMessageInput = document.getElementById('userMessage');
+    const sendBtn = document.getElementById('sendBtn');
+
+    // Deixa o chat input invis&iacute;vel inicialmente
+    chatInputContainer.style.display = 'none';
+
+    generateBtn.addEventListener('click', () => {
+        // Simulate loading
+        loadingMessage.style.display = 'block';
+        suggestionsContainer.style.display = 'none';
+        bubbleGeneral.style.display = 'none';
+        bubbleFadel.style.display = 'none';
+        bubbleIso.style.display = 'none';
+        bubbleCombined.style.display = 'none';
+        chatInputContainer.style.display = 'none';
+
+        // Simulate "processing"
+        setTimeout(() => {
+            loadingMessage.style.display = 'none';
+            suggestionsContainer.style.display = 'flex';
+            suggestionsContainer.style.flexDirection = 'column';
+
+            // Show agent messages
+            bubbleGeneral.style.display = 'flex';
+            bubbleFadel.style.display = 'flex';
+            bubbleIso.style.display = 'flex';
+
+            // Simulated suggestions
+            agentGeneral.textContent = " Crie um quiz interativo sobre formas geom&eacute;tricas, distribuindo pontos para respostas corretas!";
+            agent4D.textContent = " Ap&oacute;s o quiz, incentive a reflex&atilde;o sobre o processo de aprendizagem, promovendo habilidades de meta-aprendizado.";
+            agentIso.textContent = " Transforme a aula em um 'Campeonato de Formas' com medalhas virtuais e ranking final, estimulando a motiva&ccedil;&atilde;o.";
+
+            // Mostrar o quarto bal&atilde;o com a combina&ccedil;&atilde;o das sugest&otilde;es
+            setTimeout(() => {
+                bubbleCombined.style.display = 'flex';
+                agentCombined.textContent = " Ao integrar as ideias dos tr&ecirc;s agentes, voc&ecirc; pode criar uma atividade gamificada completa: use um quiz de formas geom&eacute;tricas (ChatGPT) para avaliar conhecimento, incentive a reflex&atilde;o p&oacute;s-atividade (Agente 4D) e aplique mec&acirc;nicas de jogo (Agente Iso) para manter o engajamento. Al&eacute;m disso, a Athena.IA fornece recursos adicionais, como exemplos de atividades, templates e links para plataformas de gamifica&ccedil;&atilde;o, ajudando a adaptar as sugest&otilde;es ao seu contexto. ";
+
+                // Agora mostra o campo de chat
+                chatInputContainer.style.display = 'flex';
+                requestAnimationFrame(() => {
+                    chatInputContainer.classList.add('visible');
+                });
+            }, 1000);
+        }, 2000);
+    });
+
+    sendBtn.addEventListener('click', () => {
+        const message = userMessageInput.value.trim();
+        if (message) {
+            // Create a new user bubble
+            const userBubble = document.createElement('div');
+            userBubble.classList.add('chat-bubble', 'user-bubble');
+            userBubble.innerHTML = `
+                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712019.png" alt="User">
+                <div class="bubble">
+                    <div class="agent-name">Voc&ecirc;</div>
+                    <p>${message}</p>
+                </div>
+            `;
+
+            suggestionsContainer.appendChild(userBubble);
+            userMessageInput.value = '';
+            suggestionsContainer.scrollTop = suggestionsContainer.scrollHeight;
+
+            // Ao enviar a mensagem do usu&aacute;rio, gerar mais 3 respostas dos agentes e depois a Athena.IA
+            setTimeout(() => {
+                const generalReply = document.createElement('div');
+                generalReply.classList.add('chat-bubble', 'general-bubble');
+                generalReply.innerHTML = `
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="ChatGPT">
+                    <div class="bubble">
+                        <div class="agent-name">ChatGPT (Generalista)</div>
+                        <p> Sugest&atilde;o: Use flashcards visuais r&aacute;pidos para refor&ccedil;ar o conte&uacute;do ap&oacute;s o quiz, oferecendo pontos extras por respostas &aacute;geis!</p>
+                    </div>
+                `;
+
+                const fadelReply = document.createElement('div');
+                fadelReply.classList.add('chat-bubble', 'fadel-bubble');
+                fadelReply.innerHTML = `
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712016.png" alt="Agente 4D">
+                    <div class="bubble">
+                        <div class="agent-name">Agente 4D</div>
+                        <p> Ap&oacute;s essa din&acirc;mica, pe&ccedil;a que os alunos expliquem oralmente suas estrat&eacute;gias de identifica&ccedil;&atilde;o das formas, promovendo an&aacute;lise e s&iacute;ntese do conhecimento.</p>
+                    </div>
+                `;
+
+                const isoReply = document.createElement('div');
+                isoReply.classList.add('chat-bubble', 'iso-bubble');
+                isoReply.innerHTML = `
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712019.png" alt="Agente Iso">
+                    <div class="bubble">
+                        <div class="agent-name">Agente Iso</div>
+                        <p> Ao final, destaque o melhor desempenho com um pequeno efeito sonoro e um emoji de confete, mantendo o clima l&uacute;dico!</p>
+                    </div>
+                `;
+
+                suggestionsContainer.appendChild(generalReply);
+                suggestionsContainer.appendChild(fadelReply);
+                suggestionsContainer.appendChild(isoReply);
+
+                suggestionsContainer.scrollTop = suggestionsContainer.scrollHeight;
+
+                // Ap&oacute;s as tr&ecirc;s novas sugest&otilde;es, a Athena.IA d&aacute; outra resposta combinando
+                setTimeout(() => {
+                    const athenaReply = document.createElement('div');
+                    athenaReply.classList.add('chat-bubble', 'combined-bubble');
+                    athenaReply.innerHTML = `
+                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712026.png" alt="Athena.IA">
+                        <div class="bubble">
+                            <div class="agent-name">Athena.IA</div>
+                            <p> Ao reunir essas novas ideias, voc&ecirc; pode refor&ccedil;ar o aprendizado p&oacute;s-quiz com flashcards (ChatGPT), promover a reflex&atilde;o oral (Agente 4D) e celebrar conquistas (Agente Iso). Lembre-se que a Athena.IA disponibiliza recursos adicionais, como exemplos pr&aacute;ticos e plataformas recomendadas, ajudando a tornar a experi&ecirc;ncia ainda mais rica e adaptada &agrave; sua turma. </p>
+                        </div>
+                    `;
+
+                    suggestionsContainer.appendChild(athenaReply);
+                    suggestionsContainer.scrollTop = suggestionsContainer.scrollHeight;
+                }, 1000);
+            }, 1000);
+        }
+    });
+</script>
+
+</body>
+</html>
